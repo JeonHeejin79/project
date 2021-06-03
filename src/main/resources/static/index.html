@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Shortening Url Service</title>
+    <link rel="stylesheet" href="/webjars/jquery-ui/1.11.4/jquery-ui.min.css" />
+
+    <script src="/webjars/jquery/1.11.1/jquery.min.js"></script>
+    <script src="/webjars/jquery-ui/1.11.4/jquery-ui.min.js"></script>
+
+</head>
+<body>
+    <div id="wrap">
+        <h1>Shortening Url Service</h1>
+        <div id="content">
+            <div><h3>SEND URL</h3></div>
+            <div>
+                <input id="reqUrl" name="reqUrl" type="text" style="width: 250px;">
+                <input type="button" value="URL전송" onclick="sendUrl();">
+            </div>
+            <div><h3>RESULT URL</h3></div>
+            <div>
+                <input id="resUrl" name="resUrl" type="text" style="width: 250px;">
+                <input type="button" value="URL이동" onclick="goToRedirectPage();">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+$(function() {
+    init();
+})
+
+function init() {
+    console.log("initialized");
+}
+
+let originUrl = "";
+
+function sendUrl(v) {
+    var reqUrl = $('#reqUrl').val();
+    var pm = { reqUrl : reqUrl };
+
+    sendAjax('/getShorteningUrl', pm).then((v) => {
+        originUrl = v.reqUrl;
+
+        var shorteningUrl = v.resUrl;
+
+        $('#resUrl').val(shorteningUrl);
+    })
+}
+
+function goToRedirectPage() {
+    window.open(originUrl)
+}
+
+function sendAjax(sendUrl, sendData) {
+    var def = $.Deferred();
+
+    $.ajax({
+        url: sendUrl
+        ,data: JSON.stringify(sendData)
+        ,type: 'post'
+        ,contentType: 'application/json'
+        ,dataType: 'json'
+    }).done((result, status, resObj) => {
+
+        console.log(result)
+        def.resolve(result || {});
+
+    }).fail((result, status, resObj) => {
+
+        console.log(status)
+        def.reject(result, status)
+
+    })
+
+    return def.promise()
+}
+
+</script>
