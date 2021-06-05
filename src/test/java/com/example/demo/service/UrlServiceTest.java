@@ -40,7 +40,7 @@ class UrlServiceTest {
         assertEquals(resUrl1, resUrl2);
 
         // test case 2 )
-        // 같은  url
+        // 같은  url 로 요청시 카운트 체크
         assertEquals(reqCnt, response2.getEqualsReqUrlCnt());
 
     }
