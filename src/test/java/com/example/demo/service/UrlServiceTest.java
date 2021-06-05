@@ -17,9 +17,10 @@ class UrlServiceTest {
     public void getShorteningUrlTest() {
         UrlInfoVO request = new UrlInfoVO();
         int reqCnt = 0;
+        String reqUrl = "https://en.wikipedia.org/wiki/URL_shortening";
 
         //첫번째 요청
-        request.setReqUrl("https://en.wikipedia.org/wiki/URL_shortening");
+        request.setReqUrl(reqUrl);
         reqCnt++;
 
         UrlInfoVO response1 = urlService.getShorteningUrl(request);
@@ -27,7 +28,7 @@ class UrlServiceTest {
         String resUrl1 = response1.getResUrl();
 
         // 두번째 요청
-        request.setReqUrl("https://en.wikipedia.org/wiki/URL_shortening");
+        request.setReqUrl(reqUrl);
         reqCnt++;
 
         UrlInfoVO response2 = urlService.getShorteningUrl(request);

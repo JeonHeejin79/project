@@ -15,12 +15,12 @@
         <div id="content">
             <div><h3>SEND URL</h3></div>
             <div>
-                <input id="reqUrl" name="reqUrl" type="text" style="width: 250px;">
+                <input id="reqUrl" name="reqUrl" type="text" style="width: 400px;" placeholder ="에) https://en.wikipedia.org/wiki/URL_shortening">
                 <input type="button" value="URL전송" onclick="sendUrl();">
             </div>
             <div><h3>RESULT URL</h3></div>
             <div>
-                <input id="resUrl" name="resUrl" type="text" style="width: 250px;">
+                <input id="resUrl" name="resUrl" type="text"style="width: 250px;" readonly>
                 <input type="button" value="URL이동" onclick="goToRedirectPage();">
             </div>
         </div>
@@ -53,7 +53,10 @@ function sendUrl(v) {
 }
 
 function goToRedirectPage() {
-    window.open(originUrl)
+
+    var reqRedirectUrl = $('#resUrl').val();
+    window.open(reqRedirectUrl);
+
 }
 
 function sendAjax(sendUrl, sendData) {

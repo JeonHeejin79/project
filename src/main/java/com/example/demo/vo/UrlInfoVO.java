@@ -2,9 +2,13 @@ package com.example.demo.vo;
 
 public class UrlInfoVO {
 
-    private String reqUrl;
+    private String reqUrl;  // shortening req url
 
-    private String resUrl;
+    private String resUrl; // shortening res url
+
+    private String reqRedirectUrl; // page req url
+
+    private String resRedirectUrl; // page res url
 
     private int equalsReqUrlCnt;
 
@@ -36,11 +40,30 @@ public class UrlInfoVO {
         this.equalsReqUrlCnt = equalsReqUrlCnt;
     }
 
+    public String getReqRedirectUrl() {
+        return reqRedirectUrl;
+    }
+
+    public void setReqRedirectUrl(String reqRedirectUrl) {
+        this.reqRedirectUrl = reqRedirectUrl;
+    }
+
+    public String getResRedirectUrl() {
+        return resRedirectUrl;
+    }
+
+    public void setResRedirectUrl(String resRedirectUrl) {
+        this.resRedirectUrl = resRedirectUrl;
+    }
+
     @Override
     public String toString() {
         return "UrlInfoVO{" +
                 "reqUrl='" + reqUrl + '\'' +
                 ", resUrl='" + resUrl + '\'' +
+                ", reqRedirectUrl='" + reqRedirectUrl + '\'' +
+                ", resRedirectUrl='" + resRedirectUrl + '\'' +
+                ", equalsReqUrlCnt=" + equalsReqUrlCnt +
                 '}';
     }
 }

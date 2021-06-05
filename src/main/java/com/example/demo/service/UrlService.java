@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -19,7 +20,9 @@ public class UrlService {
 
     private static Logger logger = LoggerFactory.getLogger(UrlService.class);
 
-    static Map<String, String> urlMap = new ConcurrentHashMap<>();
+    private final String BASIC_URL = "http://localhost:8080";
+    private final Map<String, String> urlMap = new ConcurrentHashMap<>();
+    private final Map<String, String> shortUrlMap = new ConcurrentHashMap<>();
 
     /*
      * - Shortening URL
@@ -43,9 +46,16 @@ public class UrlService {
             logger.debug("UrlService > getShorteningUrl > req url not found, will be saved");
 
             String randomString = getRandomAlphaStringByN(8);  // 8자리
-            String backAddress = InetAddress.getLoopbackAddress().getHostAddress();
 
-            String shorteningUrl = "http://" + backAddress + "/" + randomString;
+            while(true) {
+                if(shortUrlMap.get(randomString) == null) {
+                    shortUrlMap.put(randomString, reqUrl);
+                    break;
+                }
+            }
+
+
+            String shorteningUrl = BASIC_URL + "/" + randomString;
 
             logger.debug("UrlService > getShorteningUrl > shorteningUrl : " + shorteningUrl);
 
@@ -58,6 +68,26 @@ public class UrlService {
         return urlInfoVO;
     }
 
+    public UrlInfoVO getRedirectUrl(UrlInfoVO urlInfoVO) {
+
+        logger.debug("UrlService > getRedirectUrl > start ");
+
+        String reqRedirectUrl = urlInfoVO.getReqRedirectUrl();
+
+
+//        String findedKey = urlMap.entrySet()
+//                            .stream()
+//                            .filter(e -> e.getValue().contains(reqRedirectUrl)).findFirst().get().getKey();
+
+        String resRedirectUrl = shortUrlMap.get(urlInfoVO.getReqRedirectUrl());
+
+        logger.debug("UrlService > getRedirectUrl :" + resRedirectUrl);
+
+        urlInfoVO.setResRedirectUrl(resRedirectUrl);
+
+        logger.debug("UrlService > getRedirectUrl > start ");
+        return urlInfoVO;
+    }
     /*
      * @param N : return random character length
      * @return : random chracter result string

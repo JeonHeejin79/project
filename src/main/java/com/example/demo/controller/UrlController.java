@@ -16,7 +16,7 @@ public class UrlController {
     @PostMapping("/getShorteningUrl")
     public UrlInfoVO getUrl(@RequestBody UrlInfoVO urlInfoVO) {
 
-        UrlInfoVO res = new UrlInfoVO();
+        UrlInfoVO res = null;
 
         res = urlService.getShorteningUrl(urlInfoVO);
 

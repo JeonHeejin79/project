@@ -26,10 +26,10 @@ class UrlControllerTest {
 
     @Test
     public void getUrlTest() throws Exception {
-
+        String reqUrl = "https://en.wikipedia.org/wiki/URL_shortening";
         UrlInfoVO request = new UrlInfoVO();
         //첫번째 요청
-        request.setReqUrl("https://en.wikipedia.org/wiki/URL_shortening");
+        request.setReqUrl(reqUrl);
 
         String content = objectMapper.writeValueAsString(request);
 
@@ -38,7 +38,7 @@ class UrlControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.reqUrl").value("https://en.wikipedia.org/wiki/URL_shortening"));
+                .andExpect(jsonPath("$.reqUrl").value(reqUrl));
 
 
     }
